@@ -265,8 +265,8 @@ The methodologies and queries can be adapted for various retail analytics scenar
 
 1. **Clone the Repository**: 
    ```bash
-   git clone https://github.com/yourusername/retail-sales-analysis.git
-   cd retail-sales-analysis
+   git clone https://github.com/Noobie31/Retail-Sales-Analysis-SQL.git
+   cd Retail-Sales-Analysis-SQL
    ```
 
 2. **Set Up the Database**: 
