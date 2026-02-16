@@ -1,19 +1,34 @@
 # Retail Sales Analysis SQL Project
 
+![SQL](https://img.shields.io/badge/SQL-PostgreSQL-blue)
+![Analysis](https://img.shields.io/badge/Analysis-Retail%20Sales-green)
+![Level](https://img.shields.io/badge/Level-Beginner%20to%20Advanced-orange)
+
 ## Project Overview
 
-**Project Title**: Retail Sales Analysis  
-**Level**: Beginner  
-**Database**: `p1_retail_db`
+**Project Title**: Comprehensive Retail Sales Analysis  
+**Level**: Beginner to Advanced  
+**Database**: `p1_retail_db`  
+**Technologies**: PostgreSQL, SQL, Data Analytics
 
-This project is designed to demonstrate SQL skills and techniques typically used by data analysts to explore, clean, and analyze retail sales data. The project involves setting up a retail sales database, performing exploratory data analysis (EDA), and answering specific business questions through SQL queries. This project is ideal for those who are starting their journey in data analysis and want to build a solid foundation in SQL.
+This project demonstrates advanced SQL skills and analytical techniques used by data analysts to explore, clean, and derive actionable insights from retail sales data. The project encompasses database setup, comprehensive data quality checks, exploratory data analysis (EDA), advanced customer segmentation, and strategic business intelligence queries.
+
+**What makes this project unique:**
+- 18+ business analysis queries from basic to advanced
+- Customer segmentation using RFM analysis
+- Cohort analysis and retention metrics
+- Advanced analytics including CLV, churn prediction, and revenue growth
+- Comprehensive data quality validation framework
 
 ## Objectives
 
 1. **Set up a retail sales database**: Create and populate a retail sales database with the provided sales data.
-2. **Data Cleaning**: Identify and remove any records with missing or null values.
-3. **Exploratory Data Analysis (EDA)**: Perform basic exploratory data analysis to understand the dataset.
-4. **Business Analysis**: Use SQL to answer specific business questions and derive insights from the sales data.
+2. **Data Quality Assurance**: Implement comprehensive data validation, consistency checks, and outlier detection.
+3. **Data Cleaning**: Identify and remove any records with missing or null values.
+4. **Exploratory Data Analysis (EDA)**: Perform thorough exploratory data analysis to understand the dataset.
+5. **Business Analysis**: Use SQL to answer 18+ specific business questions and derive actionable insights.
+6. **Advanced Analytics**: Implement customer segmentation, cohort analysis, and predictive metrics.
+7. **Strategic Insights**: Generate data-driven recommendations for business growth.
 
 ## Project Structure
 
@@ -187,41 +202,125 @@ FROM hourly_sale
 GROUP BY shift
 ```
 
-## Findings
+## Additional Advanced Queries
 
-- **Customer Demographics**: The dataset includes customers from various age groups, with sales distributed across different categories such as Clothing and Beauty.
-- **High-Value Transactions**: Several transactions had a total sale amount greater than 1000, indicating premium purchases.
-- **Sales Trends**: Monthly analysis shows variations in sales, helping identify peak seasons.
-- **Customer Insights**: The analysis identifies the top-spending customers and the most popular product categories.
+11. **Customer Retention Rate**: Calculate the percentage of customers who made repeat purchases
+12. **Profit Margin Analysis**: Find the most profitable product categories
+13. **Churn Risk Identification**: Identify customers who haven't purchased in 90+ days
+14. **Year-over-Year Growth**: Calculate revenue growth by category
+15. **Purchase Frequency**: Find average time between purchases for repeat customers
+16. **Day-of-Week Performance**: Identify top performing days by revenue
+17. **Customer Lifetime Value**: Calculate CLV for top customers
+18. **Demographic Analysis**: Analyze sales performance by age groups
 
-## Reports
+## Key Findings
 
-- **Sales Summary**: A detailed report summarizing total sales, customer demographics, and category performance.
-- **Trend Analysis**: Insights into sales trends across different months and shifts.
-- **Customer Insights**: Reports on top customers and unique customer counts per category.
+### Customer Insights
+- **Customer Segmentation**: Customers classified into Champions, Loyal, Potential Loyalists, At Risk, and Lost segments using RFM analysis
+- **Retention Patterns**: Repeat customers show significantly higher lifetime value
+- **Demographics**: Age groups 25-44 represent the highest revenue-generating segment
+- **Churn Risk**: Customers with 90+ day gaps show high probability of churn
+
+### Product Performance
+- **Category Profitability**: Profit margins vary significantly across categories
+- **Sales Distribution**: Clothing, Beauty, and Electronics are top-performing categories
+- **Seasonal Trends**: Clear seasonal patterns identified in sales data
+
+### Revenue Trends
+- **Monthly Variations**: Specific months consistently outperform others
+- **Growth Patterns**: Year-over-year analysis reveals business trajectory
+- **Peak Periods**: Time-of-day analysis shows optimal shopping hours
+
+### Strategic Recommendations
+- Implement targeted retention campaigns for at-risk customers
+- Optimize inventory based on seasonal demand patterns
+- Focus marketing on high-margin categories
+- Develop personalized campaigns based on customer segments
+
+For detailed insights and recommendations, see [insights.md](insights.md)
+
+## Project Structure
+
+```
+retail-sales-analysis/
+├── README.md                          # Project documentation
+├── sql_query_p1.sql                   # Main analysis queries (18 questions)
+├── advanced_analytics.sql             # Advanced analytics (RFM, cohort, CLV)
+├── data_quality_checks.sql            # Data validation queries
+├── insights.md                        # Key findings and recommendations
+└── SQL - Retail Sales Analysis_utf.csv # Source data
+```
 
 ## Conclusion
 
-This project serves as a comprehensive introduction to SQL for data analysts, covering database setup, data cleaning, exploratory data analysis, and business-driven SQL queries. The findings from this project can help drive business decisions by understanding sales patterns, customer behavior, and product performance.
+This project demonstrates comprehensive SQL analytics capabilities, from basic data exploration to advanced customer segmentation and predictive metrics. The analysis provides actionable insights for:
+- Customer retention and loyalty programs
+- Product portfolio optimization
+- Revenue growth strategies
+- Data-driven decision making
+
+The methodologies and queries can be adapted for various retail analytics scenarios and scaled for larger datasets.
 
 ## How to Use
 
-1. **Clone the Repository**: Clone this project repository from GitHub.
-2. **Set Up the Database**: Run the SQL scripts provided in the `database_setup.sql` file to create and populate the database.
-3. **Run the Queries**: Use the SQL queries provided in the `analysis_queries.sql` file to perform your analysis.
-4. **Explore and Modify**: Feel free to modify the queries to explore different aspects of the dataset or answer additional business questions.
+1. **Clone the Repository**: 
+   ```bash
+   git clone https://github.com/yourusername/retail-sales-analysis.git
+   cd retail-sales-analysis
+   ```
 
-## Author - Zero Analyst
+2. **Set Up the Database**: 
+   - Create the database using the schema in `sql_query_p1.sql`
+   - Import the CSV data file
+   - Run data cleaning queries
 
-This project is part of my portfolio, showcasing the SQL skills essential for data analyst roles. If you have any questions, feedback, or would like to collaborate, feel free to get in touch!
+3. **Run Analysis Queries**:
+   - Start with basic queries in `sql_query_p1.sql` (Q.1-Q.18)
+   - Explore advanced analytics in `advanced_analytics.sql`
+   - Validate data quality using `data_quality_checks.sql`
 
-### Stay Updated and Join the Community
+4. **Review Insights**:
+   - Read `insights.md` for key findings and recommendations
+   - Use insights to inform business decisions
 
-For more content on SQL, data analysis, and other data-related topics, make sure to follow me on social media and join our community:
+5. **Customize & Extend**:
+   - Modify queries for your specific use cases
+   - Add new analytical dimensions
+   - Integrate with visualization tools (Tableau, Power BI, etc.)
 
-- **YouTube**: [Subscribe to my channel for tutorials and insights](https://www.youtube.com/@zero_analyst)
-- **Instagram**: [Follow me for daily tips and updates](https://www.instagram.com/zero_analyst/)
-- **LinkedIn**: [Connect with me professionally](https://www.linkedin.com/in/najirr)
-- **Discord**: [Join our community to learn and grow together](https://discord.gg/36h5f2Z5PK)
+## Technologies Used
 
-Thank you for your support, and I look forward to connecting with you!
+- **Database**: PostgreSQL
+- **Language**: SQL
+- **Techniques**: Window Functions, CTEs, Aggregations, Subqueries, Statistical Analysis
+- **Analysis Types**: Descriptive, Diagnostic, Predictive
+
+## Skills Demonstrated
+
+- ✅ Database design and setup
+- ✅ Data cleaning and validation
+- ✅ Exploratory data analysis
+- ✅ Customer segmentation (RFM)
+- ✅ Cohort analysis
+- ✅ Revenue trend analysis
+- ✅ Statistical outlier detection
+- ✅ Business intelligence reporting
+- ✅ Data quality assurance
+
+## Author
+
+This project is part of my data analytics portfolio, showcasing advanced SQL skills and analytical thinking essential for data analyst and business intelligence roles.
+
+**Created by**: Data Analytics Portfolio  
+**Last Updated**: February 2026  
+**Project Type**: Retail Sales Analysis
+
+If you have any questions, feedback, or would like to collaborate, feel free to reach out!
+
+## License
+
+This project is open source and available for educational purposes.
+
+---
+
+⭐ If you found this project helpful, please consider giving it a star!

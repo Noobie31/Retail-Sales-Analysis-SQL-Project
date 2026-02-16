@@ -223,5 +223,134 @@ SELECT
 FROM hourly_sale
 GROUP BY shift
 
+-- End of basic queries
+
+-- =====================================================
+-- ADDITIONAL ADVANCED QUERIES
+-- =====================================================
+
+-- Q.11 Calculate customer retention rate (customers who made repeat purchases)
+SELECT 
+    COUNT(DISTINCT CASE WHEN purchase_count > 1 THEN customer_id END) as repeat_customers,
+    COUNT(DISTINCT customer_id) as total_customers,
+    ROUND((COUNT(DISTINCT CASE WHEN purchase_count > 1 THEN customer_id END)::DECIMAL / 
+           COUNT(DISTINCT customer_id)) * 100, 2) as retention_rate_pct
+FROM (
+    SELECT customer_id, COUNT(*) as purchase_count
+    FROM retail_sales
+    GROUP BY customer_id
+) customer_purchases;
+
+-- Q.12 Find the most profitable product category by calculating profit margin
+SELECT 
+    category,
+    ROUND(SUM(total_sale), 2) as total_revenue,
+    ROUND(SUM(cogs), 2) as total_cost,
+    ROUND(SUM(total_sale - cogs), 2) as total_profit,
+    ROUND(((SUM(total_sale - cogs) / SUM(total_sale)) * 100), 2) as profit_margin_pct
+FROM retail_sales
+GROUP BY category
+ORDER BY profit_margin_pct DESC;
+
+-- Q.13 Identify customers who haven't purchased in the last 90 days (churn risk)
+WITH last_purchase AS (
+    SELECT 
+        customer_id,
+        MAX(sale_date) as last_purchase_date,
+        (SELECT MAX(sale_date) FROM retail_sales) - MAX(sale_date) as days_since_purchase
+    FROM retail_sales
+    GROUP BY customer_id
+)
+SELECT 
+    customer_id,
+    last_purchase_date,
+    days_since_purchase
+FROM last_purchase
+WHERE days_since_purchase > 90
+ORDER BY days_since_purchase DESC;
+
+-- Q.14 Calculate year-over-year growth by category
+WITH yearly_sales AS (
+    SELECT 
+        EXTRACT(YEAR FROM sale_date) as year,
+        category,
+        SUM(total_sale) as annual_revenue
+    FROM retail_sales
+    GROUP BY EXTRACT(YEAR FROM sale_date), category
+)
+SELECT 
+    year,
+    category,
+    ROUND(annual_revenue, 2) as revenue,
+    ROUND(annual_revenue - LAG(annual_revenue) OVER (PARTITION BY category ORDER BY year), 2) as yoy_change,
+    ROUND(((annual_revenue - LAG(annual_revenue) OVER (PARTITION BY category ORDER BY year)) / 
+           LAG(annual_revenue) OVER (PARTITION BY category ORDER BY year) * 100), 2) as yoy_growth_pct
+FROM yearly_sales
+ORDER BY category, year;
+
+-- Q.15 Find the average time between purchases for repeat customers
+WITH customer_purchases AS (
+    SELECT 
+        customer_id,
+        sale_date,
+        LEAD(sale_date) OVER (PARTITION BY customer_id ORDER BY sale_date) as next_purchase_date
+    FROM retail_sales
+)
+SELECT 
+    ROUND(AVG(next_purchase_date - sale_date), 2) as avg_days_between_purchases
+FROM customer_purchases
+WHERE next_purchase_date IS NOT NULL;
+
+-- Q.16 Identify top performing days of the week by revenue
+SELECT 
+    TO_CHAR(sale_date, 'Day') as day_of_week,
+    EXTRACT(DOW FROM sale_date) as day_number,
+    COUNT(*) as total_transactions,
+    ROUND(SUM(total_sale), 2) as total_revenue,
+    ROUND(AVG(total_sale), 2) as avg_transaction_value
+FROM retail_sales
+GROUP BY TO_CHAR(sale_date, 'Day'), EXTRACT(DOW FROM sale_date)
+ORDER BY total_revenue DESC;
+
+-- Q.17 Calculate customer lifetime value (CLV) for top customers
+SELECT 
+    customer_id,
+    COUNT(DISTINCT transaction_id) as total_purchases,
+    ROUND(SUM(total_sale), 2) as lifetime_value,
+    ROUND(AVG(total_sale), 2) as avg_order_value,
+    MIN(sale_date) as first_purchase,
+    MAX(sale_date) as last_purchase,
+    MAX(sale_date) - MIN(sale_date) as customer_lifespan_days
+FROM retail_sales
+GROUP BY customer_id
+ORDER BY lifetime_value DESC
+LIMIT 20;
+
+-- Q.18 Analyze sales performance by age demographics
+SELECT 
+    CASE 
+        WHEN age < 25 THEN '18-24'
+        WHEN age BETWEEN 25 AND 34 THEN '25-34'
+        WHEN age BETWEEN 35 AND 44 THEN '35-44'
+        WHEN age BETWEEN 45 AND 54 THEN '45-54'
+        WHEN age BETWEEN 55 AND 64 THEN '55-64'
+        ELSE '65+'
+    END as age_group,
+    COUNT(DISTINCT customer_id) as unique_customers,
+    COUNT(*) as total_transactions,
+    ROUND(SUM(total_sale), 2) as total_revenue,
+    ROUND(AVG(total_sale), 2) as avg_transaction_value
+FROM retail_sales
+GROUP BY 
+    CASE 
+        WHEN age < 25 THEN '18-24'
+        WHEN age BETWEEN 25 AND 34 THEN '25-34'
+        WHEN age BETWEEN 35 AND 44 THEN '35-44'
+        WHEN age BETWEEN 45 AND 54 THEN '45-54'
+        WHEN age BETWEEN 55 AND 64 THEN '55-64'
+        ELSE '65+'
+    END
+ORDER BY total_revenue DESC;
+
 -- End of project
 
